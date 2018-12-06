@@ -1,0 +1,20 @@
+---
+- hosts: all
+
+  vars:
+    service: "{{ service }}"
+    service_name: "{{ service_name }}"
+  tasks:
+    - name: "{{ service }} OS Package Installation"
+      package: name={{ service }} state=present
+    - name: NTP File Configurations
+#      file: path=ntp.conf state=file
+      copy: src=ntp.conf  dest=/etc/ntp.conf
+#      notify:
+#      - restart ntp
+    - name: To start NTP services
+      service: name={{ service_name }} state=started enabled=yes
+#  handlers:
+#    - name: restart ntp
+#      service: name={{ service }} state=restarted
+
